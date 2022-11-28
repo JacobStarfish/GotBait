@@ -31,10 +31,8 @@ const SignInScreen = () => {
     }
     setLoading(false);
 
-
-    //console.warn("Sign In");
     //validate user
-    //navigation.navigate('HomeScreen');
+    navigation.navigate('HomeScreen');
   };
 
   const onForgotPasswordPressed = () => {
