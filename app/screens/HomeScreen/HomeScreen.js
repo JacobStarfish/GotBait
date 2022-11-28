@@ -9,7 +9,7 @@ const HomeScreen = () => {
   const { height } = useWindowDimensions();
 
   return (
-    <ScrollView>
+    <ScrollView style={styles.container}>
       <Text style={styles.headerText}>Below is a list of Live Bait and their Availability</Text>
 
       <Text>Live Shrimp</Text>
@@ -40,6 +40,9 @@ const HomeScreen = () => {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    backgroundColor: 'olive'
+  },
   headerText: {
     fontSize: 16,
     fontWeight: '700',
