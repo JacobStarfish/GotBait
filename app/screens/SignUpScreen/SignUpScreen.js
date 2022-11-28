@@ -5,27 +5,27 @@ import CustomButton from 'components/CustomButton';
 import SocialSignInButtons from 'components/SocialSignInButtons';
 import {useNavigation} from '@react-navigation/core';
 import { Auth } from 'aws-amplify';
-import {useForm} from 'react-hook-form';
 
 const EMAIL_REGEX =
   /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-  
-const SignUpScreen = () => {
 
-  const {control, handleSubmit, watch} = useForm();
-  const pwd = watch('password');
+const SignUpScreen = () => {
+  const [Name, setName] = useState('');
+  const [Username, setUsername] = useState('');
+  const [Email, setEmail] = useState('');
+  const [Password, setPassword] = useState('');
+  const [ConfirmPassword, setConfirmPassword] = useState('');
   const navigation = useNavigation();
 
 
-  //Creating new user, protecting against multiple register presses and 
+  //Creating new user, protecting against multiple register presses and
   // requiring all information.
   const onRegisterPressed = async data => {
-    const {username, password, email, name} = data;
-    try{
+    try {
       await Auth.signUp({
-        username,
-        password,
-        attributes: {email, name, preferred_username: username}
+        username: Username,
+        password: Password,
+        attributes: {email: Email, name: Name, preferred_username: Username}
       });
 
       navigation.navigate('ConfirmEmail', {username});
@@ -47,11 +47,11 @@ const SignUpScreen = () => {
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       <View style={styles.root}>
-        <Text style={styles.title}>Create an Account</Text> 
+        <Text style={styles.title}>Create an Account</Text>
 
         <CustomInput
           name="name"
-          control={control}
+          setValue={setName}
           placeholder="Name"
           rules={{
             required: 'Name is required',
@@ -68,7 +68,7 @@ const SignUpScreen = () => {
 
         <CustomInput
           name="username"
-          control={control}
+          setValue={setUsername}
           placeholder="Username"
           rules={{
             required: 'Username is required',
@@ -84,7 +84,7 @@ const SignUpScreen = () => {
         />
         <CustomInput
           name="email"
-          control={control}
+          setValue={setEmail}
           placeholder="Email"
           rules={{
             required: 'Email is required',
@@ -93,7 +93,7 @@ const SignUpScreen = () => {
         />
         <CustomInput
           name="password"
-          control={control}
+          setValue={setPassword}
           placeholder="Password"
           secureTextEntry
           rules={{
@@ -105,9 +105,9 @@ const SignUpScreen = () => {
           }}
         />
         <CustomInput
-          name="password-repeat"
-          control={control}
-          placeholder="Repeat Password"
+          name="password-confirm"
+          setValue={setConfirmPassword}
+          placeholder="Confirm Password"
           secureTextEntry
           rules={{
             validate: value => value === pwd || 'Password do not match',
@@ -116,7 +116,7 @@ const SignUpScreen = () => {
 
         <CustomButton
           text="Register"
-          onPress={handleSubmit(onRegisterPressed)}
+          onPress={onRegisterPressed}
         />
 
         <Text>
@@ -124,15 +124,15 @@ const SignUpScreen = () => {
           <Text style={styles.link} onPress={onTermsOfUsePressed}>Terms of Use</Text> and {''}
           <Text style={styles.link} onPress={onPrivacyPolicyPressed}>Privacy Policy</Text>
         </Text>
-      
-        
+
+
         <SocialSignInButtons/>
 
         <CustomButton
-          text="Already have an Account? Sign In" 
+          text="Already have an Account? Sign In"
           onPress={onSignInPressed}
-          type="TERTIARY" 
-        />
+          type="TERTIARY"
+          />
       </View>
     </ScrollView>
   );
@@ -145,7 +145,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'olive'
   },
   link:{
-    color: '#FDB075'  
+    color: '#FDB075'
   },
   title: {
     fontSize: 24,

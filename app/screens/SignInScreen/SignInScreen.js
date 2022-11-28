@@ -14,7 +14,7 @@ const SignInScreen = () => {
 
   const {height} = useWindowDimensions();
   const navigation = useNavigation();
-  
+
 
   const onSignInPressed = async (data) => {
     //Check to make sure we don't call function multiple times
@@ -23,15 +23,15 @@ const SignInScreen = () => {
     }
 
     setLoading(true);
-    try{
-      const response = await Auth.signIn(data.Username, data.Password);
+    try {
+      const response = await Auth.signIn(Username, Password);
       console.log(response);
     } catch(e) {
       Alert.alert('Oops', e.message);
     }
     setLoading(false);
-    
-    
+
+
     //console.warn("Sign In");
     //validate user
     //navigation.navigate('HomeScreen');
@@ -49,36 +49,36 @@ const SignInScreen = () => {
     <ScrollView showsVerticalScrollIndicator={false}>
       <View style={styles.root}>
         <Image
-          source={Logo} 
-          styles={[styles.logo, {height: height * 0.3}]} 
-          resizeMode='contain' 
+          source={Logo}
+          styles={[styles.logo, {height: height * 0.3}]}
+          resizeMode='contain'
         />
-        <CustomInput 
-          placeholder="Username" 
-          value={Username} 
-          setValue={setUsername} 
+        <CustomInput
+          placeholder="Username"
+          value={Username}
+          setValue={setUsername}
         />
-        <CustomInput 
-          placeholder="Password" 
-          value={Password} 
+        <CustomInput
+          placeholder="Password"
+          value={Password}
           setValue={setPassword}
-          secureTextEntry={true} 
+          secureTextEntry={true}
         />
-        <CustomButton 
-          text={loading ? "Loading..." : 'Sign In'} 
-          onPress={onSignInPressed} 
+        <CustomButton
+          text={loading ? "Loading..." : 'Sign In'}
+          onPress={onSignInPressed}
         />
 
         <CustomButton
-          text="Forgot Password?" 
+          text="Forgot Password?"
           onPress={onForgotPasswordPressed}
-          type="TERTIARY" 
+          type="TERTIARY"
         />
         <SocialSignInButtons/>
         <CustomButton
-          text="Don't have an account? Create one here" 
+          text="Don't have an account? Create one here"
           onPress={onSignUpPressed}
-          type="TERTIARY" 
+          type="TERTIARY"
         />
       </View>
     </ScrollView>
