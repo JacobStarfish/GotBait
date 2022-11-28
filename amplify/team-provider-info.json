@@ -1,0 +1,20 @@
+{
+  "staging": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-gotbait-staging-152511-authRole",
+      "UnauthRoleArn": "arn:aws:iam::609974982508:role/amplify-gotbait-staging-152511-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::609974982508:role/amplify-gotbait-staging-152511-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-gotbait-staging-152511-deployment",
+      "UnauthRoleName": "amplify-gotbait-staging-152511-unauthRole",
+      "StackName": "amplify-gotbait-staging-152511",
+      "StackId": "arn:aws:cloudformation:us-east-1:609974982508:stack/amplify-gotbait-staging-152511/d95f05b0-6f30-11ed-996b-0a4f3e8d015b",
+      "AmplifyAppId": "d1eazfs9jl6kff"
+    },
+    "categories": {
+      "auth": {
+        "GotBait": {}
+      }
+    }
+  }
+}

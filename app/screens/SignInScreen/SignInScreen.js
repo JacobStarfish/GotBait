@@ -1,24 +1,41 @@
 import React, {useState} from 'react';
-import { View, Text, Image, StyleSheet, useWindowDimensions, ScrollView } from 'react-native';
+import { View, Text, Image, StyleSheet, useWindowDimensions, ScrollView, Alert } from 'react-native';
 import Logo from 'assets/Logo_1.png';
 import CustomInput from 'components/CustomInput';
 import CustomButton from 'components/CustomButton';
 import SocialSignInButtons from 'components/SocialSignInButtons';
 import {useNavigation} from '@react-navigation/native';
+import { Auth } from 'aws-amplify';
 
 const SignInScreen = () => {
   const [Username, setUsername] = useState('');
   const [Password, setPassword] = useState('');
-  
+  const [loading, setLoading] = useState(false);
+
   const {height} = useWindowDimensions();
   const navigation = useNavigation();
   
 
-  const onSignInPressed = () => {
-    console.warn("Sign In");
+  const onSignInPressed = async (data) => {
+    //Check to make sure we don't call function multiple times
+    if(loading) {
+      return;
+    }
+
+    setLoading(true);
+    try{
+      const response = await Auth.signIn(data.Username, data.Password);
+      console.log(response);
+    } catch(e) {
+      Alert.alert('Oops', e.message);
+    }
+    setLoading(false);
+    
+    
+    //console.warn("Sign In");
     //validate user
-    navigation.navigate('HomeScreen');
-  }
+    //navigation.navigate('HomeScreen');
+  };
 
   const onForgotPasswordPressed = () => {
     navigation.navigate('ForgotPassword');
@@ -47,7 +64,10 @@ const SignInScreen = () => {
           setValue={setPassword}
           secureTextEntry={true} 
         />
-        <CustomButton text="Sign In" onPress={onSignInPressed} />
+        <CustomButton 
+          text={loading ? "Loading..." : 'Sign In'} 
+          onPress={onSignInPressed} 
+        />
 
         <CustomButton
           text="Forgot Password?" 
